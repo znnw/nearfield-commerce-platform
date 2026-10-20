@@ -1,0 +1,3 @@
+SET NAMES utf8mb4;
+
+DELETE FROM tb_blog WHERE id BETWEEN 52 AND 62;

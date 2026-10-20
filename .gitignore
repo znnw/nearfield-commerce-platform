@@ -1,0 +1,39 @@
+# Local backups and IDE files
+_backup/
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Backend build output and runtime files
+local-commerce-service/target/
+local-commerce-service/run-logs/
+**/logs/
+*.log
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+local-commerce-service/src/main/resources/application-local.y*ml
+
+# Frontend dependencies and build output
+node_modules/
+frontend/.vite/
+frontend/.next/
+frontend/dist/
+frontend/build/
+frontend/out/
+coverage/
+*.tsbuildinfo
