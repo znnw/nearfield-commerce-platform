@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-  <rect width="96" height="96" rx="22" fill="#fcece7"/>
-  <path d="M0 0h48v48H0z" fill="#e26745"/>
-  <circle cx="72" cy="72" r="18" fill="#126c63"/>
-  <text x="48" y="61" text-anchor="middle" font-size="34" font-weight="700" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="#182420">唐</text>
-</svg>

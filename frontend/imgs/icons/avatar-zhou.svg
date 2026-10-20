@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-  <rect width="96" height="96" rx="22" fill="#e26745"/>
-  <rect x="12" y="14" width="24" height="9" rx="4" fill="#fcece7"/>
-  <rect x="12" y="30" width="38" height="9" rx="4" fill="#fcece7" opacity=".72"/>
-  <circle cx="70" cy="67" r="20" fill="#126c63"/>
-  <text x="45" y="57" text-anchor="middle" font-size="34" font-weight="700" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="#ffffff">周</text>
-</svg>

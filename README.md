@@ -6,17 +6,22 @@ A Spring Boot backend for a nearby lifestyle and local-commerce platform. The se
 
 ## Repository Strategy
 
-This project uses a **monorepo**. The frontend and backend belong to the same GitHub repository:
+This project uses **two repositories**. The backend and frontend are versioned and deployed separately:
 
 ```text
-nearby-commerce/
+nearfield-commerce-platform/  # This repository
 |-- local-commerce-service/   # Spring Boot backend
-|-- frontend/                 # Frontend source code
-|-- README.md                 # English documentation
-`-- README.zh-CN.md           # Chinese documentation
+|-- README.md
+`-- README.zh-CN.md
+
+nearfield-commerce-web/       # Separate frontend repository
+|-- index.html
+|-- css/
+|-- imgs/
+`-- js/
 ```
 
-Place the frontend source in `frontend/` and commit it to this repository. Do not create a second GitHub repository unless the frontend and backend are owned by separate teams or must be released and versioned independently. The frontend is a static Vue 2 web client stored in `frontend/`; see [frontend/README.md](frontend/README.md) for its structure and deployment instructions.
+The frontend source is maintained in a separate repository and deployed from Nginx under `html/local-commerce`. Nginx serves the static frontend and proxies `/api` to this backend. The backend repository does not track frontend files.
 
 ## Table of Contents
 
@@ -166,7 +171,7 @@ local-commerce-service/
 
 ### Frontend
 
-The frontend is a mobile-oriented static multi-page application under `frontend/`.
+The frontend is maintained in a separate repository as a mobile-oriented static multi-page application and deployed under Nginx.
 
 | Area | Technology | Notes |
 | --- | --- | --- |
@@ -371,7 +376,7 @@ mvn spring-boot:run
 
 The default API base URL is `http://localhost:8081`.
 
-The frontend is served separately as static files. The recommended development setup is Nginx on port `8080` with `/api` proxied to the backend. The current API base path is configured in `frontend/js/common.js`, and a working Nginx example is documented in [frontend/README.md](frontend/README.md).
+The frontend is served separately as static files from its own repository. The recommended development setup is Nginx on port `8080` with `/api` proxied to the backend. The current API base path is configured in the frontend repository at `js/common.js`.
 
 ### 4. Tests
 
@@ -406,7 +411,7 @@ Important files:
 
 ## Current Status and Limitations
 
-- The frontend is a static Vue 2 application without a bundler, package manifest, lint configuration, or automated UI test suite.
+- The frontend is maintained in a separate repository and is not tracked by this backend repository.
 - The comment database entity and table exist, but `BlogCommentsController` has no implemented endpoints.
 - `POST /user/logout` is a placeholder and needs a real token invalidation implementation.
 - SMS delivery is not integrated. The verification code is generated and logged by the backend.
@@ -426,12 +431,15 @@ git remote add origin https://github.com/<your-account>/<repository>.git
 git push -u origin main
 ```
 
-After adding the frontend source:
+The separate frontend repository can be initialized from the Nginx-managed source directory:
 
 ```bash
-git add frontend
-git commit -m "feat: add frontend"
-git push
+cd E:/Nginx/redisXiangMu/nginx-1.18.0/html/local-commerce
+git init -b main
+git add .
+git commit -m "feat: import web frontend"
+git remote add origin https://github.com/<your-account>/nearfield-commerce-web.git
+git push -u origin main
 ```
 
-Do not commit `node_modules`, frontend build output, logs, IDE files, local environment files, private keys, tokens, or database credentials. The root `.gitignore` already covers the common cases.
+Initialize Git only inside `html/local-commerce`, not inside the entire Nginx installation directory. Do not commit Nginx executables, logs, temporary files, local environment files, private keys, tokens, or database credentials.
