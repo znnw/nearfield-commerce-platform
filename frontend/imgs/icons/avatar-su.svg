@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="22" fill="#0b4f49"/>
+  <g fill="#e5f1ed" opacity=".88">
+    <circle cx="18" cy="20" r="5"/><circle cx="35" cy="20" r="5"/><circle cx="52" cy="20" r="5"/><circle cx="69" cy="20" r="5"/>
+    <circle cx="18" cy="37" r="5"/><circle cx="35" cy="37" r="5"/><circle cx="52" cy="37" r="5"/><circle cx="69" cy="37" r="5"/>
+  </g>
+  <circle cx="75" cy="72" r="20" fill="#e9b949"/>
+  <text x="46" y="65" text-anchor="middle" font-size="34" font-weight="700" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="#ffffff">苏</text>
+</svg>

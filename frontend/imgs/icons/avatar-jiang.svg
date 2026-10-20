@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="22" fill="#e5f1ed"/>
+  <path d="M10 70c16-8 18-30 32-42 15 13 21 34 44 43z" fill="#4e7f9f"/>
+  <circle cx="78" cy="20" r="12" fill="#e26745"/>
+  <text x="48" y="61" text-anchor="middle" font-size="34" font-weight="700" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="#182420">江</text>
+</svg>

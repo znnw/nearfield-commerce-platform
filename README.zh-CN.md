@@ -6,22 +6,17 @@
 
 ## 仓库策略
 
-本项目采用 **前后端双仓库** 方式管理代码，后端和前端分别进行版本管理和部署：
+本项目采用 **monorepo（单仓库）** 方式管理前后端，前后端代码都放在同一个 GitHub 仓库中：
 
 ```text
-nearfield-commerce-platform/  # 当前仓库
+nearby-commerce/
 |-- local-commerce-service/   # Spring Boot 后端
-|-- README.md
-`-- README.zh-CN.md
-
-nearfield-commerce-web/       # 独立前端仓库
-|-- index.html
-|-- css/
-|-- imgs/
-`-- js/
+|-- frontend/                 # 前端源码
+|-- README.md                 # 英文说明
+`-- README.zh-CN.md           # 中文说明
 ```
 
-前端源码使用独立仓库管理，并部署在 Nginx 的 `html/local-commerce` 目录中。Nginx 负责托管静态前端，并将 `/api` 代理到当前后端。当前后端仓库不再包含前端文件。
+前端源码放在根目录的 `frontend/`，与后端一起提交到当前仓库。只有当前后端由不同团队维护，或必须独立发布、独立版本管理时，才建议拆成两个 GitHub 仓库。当前 `frontend/` 是基于 Vue 2 的静态 Web 前端，详细结构和部署方式见 [frontend/README.zh-CN.md](frontend/README.zh-CN.md)。
 
 ## 目录
 
@@ -171,7 +166,7 @@ local-commerce-service/
 
 ### 前端
 
-前端使用独立仓库管理，是一个面向移动端展示的静态多页应用，部署在 Nginx 目录中。
+前端位于仓库根目录的 `frontend/`，是一个面向移动端展示的静态多页应用。
 
 | 领域 | 技术 | 说明 |
 | --- | --- | --- |
@@ -376,7 +371,7 @@ mvn spring-boot:run
 
 默认 API 地址为 `http://localhost:8081`。
 
-前端作为静态资源从独立仓库部署。推荐使用监听 `8080` 端口的 Nginx，并将 `/api` 代理到后端。当前 API 基础路径配置在前端仓库的 `js/common.js` 中，部署方式记录在前端仓库的 README 中。
+前端作为静态资源单独运行。推荐使用监听 `8080` 端口的 Nginx，并将 `/api` 代理到后端。当前 API 基础路径配置在 `frontend/js/common.js` 中，可用的 Nginx 配置示例见 [frontend/README.zh-CN.md](frontend/README.zh-CN.md)。
 
 ### 4. 测试
 
@@ -411,7 +406,7 @@ mvn test
 
 ## 当前状态与限制
 
-- 前端使用独立仓库管理，不在当前后端仓库的版本控制范围内。
+- 前端是不使用打包器的静态 Vue 2 应用，暂未包含依赖清单、代码检查配置和自动化 UI 测试。
 - 评论实体和评论表已经存在，但 `BlogCommentsController` 尚未实现接口。
 - `POST /user/logout` 目前是占位接口，还需要实现 Token 失效逻辑。
 - 后端尚未接入真实短信服务，验证码只会在后端日志中输出。
@@ -431,15 +426,12 @@ git remote add origin https://github.com/<你的用户名>/<仓库名>.git
 git push -u origin main
 ```
 
-前端仓库可以在 Nginx 管理的前端源码目录中独立初始化：
+导入前端源码后执行：
 
 ```bash
-cd E:/Nginx/redisXiangMu/nginx-1.18.0/html/local-commerce
-git init -b main
-git add .
-git commit -m "feat: import web frontend"
-git remote add origin https://github.com/<你的用户名>/nearfield-commerce-web.git
-git push -u origin main
+git add frontend
+git commit -m "feat: add frontend"
+git push
 ```
 
-只在 `html/local-commerce` 中初始化 Git，不要在整个 Nginx 安装目录初始化。不要提交 Nginx 程序、日志、临时文件、本地环境变量、私钥、Token 或数据库凭据。
+不要提交 `node_modules`、前端构建产物、日志、IDE 文件、本地环境变量、私钥、Token 或数据库凭据。根目录 `.gitignore` 已覆盖常见情况。
