@@ -16,7 +16,7 @@ nearby-commerce/
 `-- README.zh-CN.md           # 中文说明
 ```
 
-前端源码应放入根目录的 `frontend/`，并与后端一起提交到当前仓库。只有当前后端由不同团队维护，或必须独立发布、独立版本管理时，才建议拆成两个 GitHub 仓库。当前工作区只包含后端代码，前端源码尚未导入。
+前端源码放在根目录的 `frontend/`，与后端一起提交到当前仓库。只有当前后端由不同团队维护，或必须独立发布、独立版本管理时，才建议拆成两个 GitHub 仓库。当前 `frontend/` 是基于 Vue 2 的静态 Web 前端，详细结构和部署方式见 [frontend/README.zh-CN.md](frontend/README.zh-CN.md)。
 
 ## 目录
 
@@ -166,7 +166,19 @@ local-commerce-service/
 
 ### 前端
 
-当前工作区尚未包含前端源码，约定位置为仓库根目录的 `frontend/`。前端导入后，应在这里补充准确的框架、包管理器、构建命令和环境变量，不应根据历史构建产物推测当前前端技术栈。
+前端位于仓库根目录的 `frontend/`，是一个面向移动端展示的静态多页应用。
+
+| 领域 | 技术 | 说明 |
+| --- | --- | --- |
+| 页面结构 | HTML5 | 首页、商户列表、商户详情、探店笔记、登录和个人中心分别使用独立页面 |
+| 样式 | CSS3 | 页面样式、公共组件样式和定制主题 |
+| 前端框架 | Vue 2 | 从 `js/vue.js` 本地加载 |
+| UI 组件库 | Element UI 2.15.3 | 从 `js/element.js` 本地加载 |
+| HTTP 客户端 | Axios | 从 `js/axios.min.js` 本地加载 |
+| API 代理 | Nginx | 将 `/api` 重写并代理到 Spring Boot 后端 |
+| 构建工具 | 无 | 前端作为静态文件直接部署 |
+
+当前前端不使用 npm 包管理器或打包器。Vue、Element UI 和 Axios 已作为静态依赖放入仓库，因此运行时不需要先执行 `npm install`。
 
 ## 关键技术实现
 
@@ -359,6 +371,8 @@ mvn spring-boot:run
 
 默认 API 地址为 `http://localhost:8081`。
 
+前端作为静态资源单独运行。推荐使用监听 `8080` 端口的 Nginx，并将 `/api` 代理到后端。当前 API 基础路径配置在 `frontend/js/common.js` 中，可用的 Nginx 配置示例见 [frontend/README.zh-CN.md](frontend/README.zh-CN.md)。
+
 ### 4. 测试
 
 ```bash
@@ -392,7 +406,7 @@ mvn test
 
 ## 当前状态与限制
 
-- 当前工作区未包含前端源码，约定位置为 `frontend/`。
+- 前端是不使用打包器的静态 Vue 2 应用，暂未包含依赖清单、代码检查配置和自动化 UI 测试。
 - 评论实体和评论表已经存在，但 `BlogCommentsController` 尚未实现接口。
 - `POST /user/logout` 目前是占位接口，还需要实现 Token 失效逻辑。
 - 后端尚未接入真实短信服务，验证码只会在后端日志中输出。

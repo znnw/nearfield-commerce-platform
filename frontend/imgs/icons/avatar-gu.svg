@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="22" fill="#e9b949"/>
+  <path d="M0 70 96 24v38L0 96z" fill="#182420" opacity=".92"/>
+  <circle cx="24" cy="24" r="10" fill="#ffffff"/>
+  <text x="48" y="55" text-anchor="middle" font-size="34" font-weight="700" font-family="PingFang SC,Microsoft YaHei,sans-serif" fill="#182420">顾</text>
+</svg>

@@ -16,7 +16,7 @@ nearby-commerce/
 `-- README.zh-CN.md           # Chinese documentation
 ```
 
-Place the frontend source in `frontend/` and commit it to this repository. Do not create a second GitHub repository unless the frontend and backend are owned by separate teams or must be released and versioned independently. The current checkout contains the backend; the frontend source has not been imported yet.
+Place the frontend source in `frontend/` and commit it to this repository. Do not create a second GitHub repository unless the frontend and backend are owned by separate teams or must be released and versioned independently. The frontend is a static Vue 2 web client stored in `frontend/`; see [frontend/README.md](frontend/README.md) for its structure and deployment instructions.
 
 ## Table of Contents
 
@@ -166,7 +166,19 @@ local-commerce-service/
 
 ### Frontend
 
-The frontend source is not included in the current checkout. Its reserved location is `frontend/` inside this repository. Once the frontend is imported, document its exact framework, package manager, build command, and environment variables here rather than inferring them from historical build artifacts.
+The frontend is a mobile-oriented static multi-page application under `frontend/`.
+
+| Area | Technology | Notes |
+| --- | --- | --- |
+| Markup | HTML5 | Separate pages for home, merchant list, merchant details, reviews, login, and profile |
+| Styling | CSS3 | Page-specific styles plus shared components and custom themes |
+| UI framework | Vue 2 | Loaded locally from `js/vue.js` |
+| Component library | Element UI 2.15.3 | Loaded locally from `js/element.js` |
+| HTTP client | Axios | Loaded locally from `js/axios.min.js` |
+| API proxy | Nginx | `/api` is rewritten to the Spring Boot backend |
+| Build tooling | None | The frontend is served directly as static files |
+
+The current frontend does not use a package manager or bundler. Vue, Element UI, and Axios are vendored into the repository so the site can run without an npm install step.
 
 ## Key Implementation Details
 
@@ -359,6 +371,8 @@ mvn spring-boot:run
 
 The default API base URL is `http://localhost:8081`.
 
+The frontend is served separately as static files. The recommended development setup is Nginx on port `8080` with `/api` proxied to the backend. The current API base path is configured in `frontend/js/common.js`, and a working Nginx example is documented in [frontend/README.md](frontend/README.md).
+
 ### 4. Tests
 
 ```bash
@@ -392,7 +406,7 @@ Important files:
 
 ## Current Status and Limitations
 
-- The frontend source is not included in this checkout. The intended location is `frontend/`.
+- The frontend is a static Vue 2 application without a bundler, package manifest, lint configuration, or automated UI test suite.
 - The comment database entity and table exist, but `BlogCommentsController` has no implemented endpoints.
 - `POST /user/logout` is a placeholder and needs a real token invalidation implementation.
 - SMS delivery is not integrated. The verification code is generated and logged by the backend.
